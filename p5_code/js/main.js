@@ -1,7 +1,6 @@
 /*
 Test Gui
 */
-//CAMILLA WUZ HERE
 class TestGui {
   constructor() {
     this.breathingState = "breathe in";
@@ -40,8 +39,9 @@ var portName = '/dev/cu.usbmodem1421'; // fill in your serial port name herev
 var note = 0;
 var notes = ["a", "b", "c", "d", "e", "f", "g"];
 var sounds = Object();
-var instrument = "spacepiano";
-var instruments = ["spacepiano"];
+var instrument = 0;
+var instruments = ["spacepiano", "analogchimes", "angelicmorph", "cometstar",
+                   "heavensshores", "pianofreeze", "sinebells"];
 var echo = "regular";
 
 function preload() {
@@ -118,7 +118,7 @@ function serialError(err) {
 }
 
 function playHeartbeat() {
-  sounds[instrument][echo][note].play();
+  sounds[instruments[instrument]][echo][note].play();
   console.log('heartbeat');
 }
 function changeNote() {
@@ -126,6 +126,7 @@ function changeNote() {
   console.log('change note');
 }
 function changeInstrument() {
+  instrument = (instrument+1)%instruments.length;
   console.log('change instrument');
 }
 function sustainOn() {

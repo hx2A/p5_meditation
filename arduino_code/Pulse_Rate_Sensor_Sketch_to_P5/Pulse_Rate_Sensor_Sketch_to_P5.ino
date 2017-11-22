@@ -1,22 +1,27 @@
 // define user constants
-#define SPAN 300
-#define VOLUME 127
+
+#define USE_ARDUINO_INTERRUPTS true
+#include <PulseSensorPlayground.h>
 
 // declare variables
-float valEMA;
-float alpha;
-boolean beat;
 boolean sustainOn;
 boolean voiceButtonOn;
 boolean noteButtonOn;
 boolean offButtonOn;
-const int sustainPin = 13;
+const int OUTPUT_TYPE = SERIAL_PLOTTER;
+const int sustainPin = 11;
 const int voicePin = 9;
 const int notePin = 12;
 const int offPin = 10;
+const int PIN_INPUT = A0;
+const int PIN_BLINK = 13;    // Pin 13 is the on-board LED
+const int PIN_FADE = 5;
+const int THRESHOLD = 550;   // Adjust this number to avoid noise when idle
 int channelNumber;
 int noteNumber;
 byte midiChannel;
+
+PulseSensorPlayground pulseSensor;
 
 void setup() {
   Serial.begin(9600);
@@ -26,10 +31,27 @@ void setup() {
   pinMode(notePin, INPUT); // configure note for reading later
   pinMode(offPin, INPUT); // configure off button for reading later
 
+  pulseSensor.analogInput(PIN_INPUT);
+  pulseSensor.blinkOnPulse(PIN_BLINK);
+  pulseSensor.fadeOnPulse(PIN_FADE);
+
+  pulseSensor.setSerial(Serial);
+  pulseSensor.setOutputType(OUTPUT_TYPE);
+  pulseSensor.setThreshold(THRESHOLD);
+
+  // Now that everything is ready, start reading the PulseSensor signal.
+  if (!pulseSensor.begin()) {
+
+    for (;;) {
+      // Flash the led to show things didn't work.
+      digitalWrite(PIN_BLINK, LOW);
+      delay(50);
+      digitalWrite(PIN_BLINK, HIGH);
+      delay(50);
+    }
+  }
+
   // initialize variables
-  valEMA = 512;
-  alpha = 2.0 / (SPAN + 1);
-  beat = false;
   sustainOn = false;
   channelNumber = 0;
   voiceButtonOn = false;
@@ -39,41 +61,23 @@ void setup() {
 }
 
 void loop() {
-  // read heartbeat monitor
-  int val = analogRead(A0);
-
-  // update moving average
-  valEMA = alpha * val + (1 - alpha) * valEMA;
-
-  // is the new reading significantly above the moving average?
-  // if so, this spike means the heart is beating
-  if (val > valEMA + 60) {
-    // have we not already detected this beat?
-    if (!beat) {
-      // note on
-  Serial.println("heartbeat");
-      // update state variables
-      beat = true;
-    }
-    // has the current reading dropped down below the moving average?
-    // if so, this beat has ended
-  } else if (val < valEMA) {
-    beat = false;
+  if (pulseSensor.sawStartOfBeat()) {
+    //   pulseSensor.outputBeat();
+    Serial.println("heartbeat");
   }
 
-  // TODO: read other buttons and compare to state. send MIDI messages where necessary
   int sustainRead = digitalRead(sustainPin);
   if (sustainOn == false && sustainRead == HIGH) {
-  Serial.println("sustain_on");
+    Serial.println("sustain_on");
     sustainOn = true;
   } else if (sustainOn == true && sustainRead == LOW) {
-  Serial.println("sustain_off");
+    Serial.println("sustain_off");
     sustainOn = false;
   }
 
   int voicePress = digitalRead(voicePin);
   if (voiceButtonOn == false && voicePress == HIGH) {
-  Serial.println("change_instrument");
+    Serial.println("change_instrument");
     voiceButtonOn = true;
   } else if (voiceButtonOn == true && voicePress == LOW) {
     voiceButtonOn = false;
@@ -81,7 +85,7 @@ void loop() {
 
   int notePress = digitalRead(notePin);
   if (noteButtonOn == false && notePress == HIGH) {
-  Serial.println("change_note");
+    Serial.println("change_note");
     noteButtonOn = true;
   } else if (noteButtonOn == true && notePress == LOW) {
     noteButtonOn = false;
@@ -89,16 +93,20 @@ void loop() {
 
   int offButtonRead = digitalRead(offPin);
   if (offButtonOn == false && offButtonRead == HIGH) {
-  Serial.println("off");
+    Serial.println("off");
     offButtonOn = true;
   } else if (offButtonOn == true && offButtonRead == LOW) {
     offButtonOn = false;
 
   }
 
-
-  // pause 10 ms
-  delay(10);
+  /*
+     Wait a bit.
+     We don't output every sample, because our baud rate
+     won't support that much I/O.
+  */
+  // pause 20 ms
+  delay(20);
 }
 
 
