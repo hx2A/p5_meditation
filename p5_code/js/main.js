@@ -32,7 +32,8 @@ class TestGui {
 Main P5 Sketch
 */
 
-var pattern1 = [4, 8, 14, 16];
+var pattern = 0;
+var patterns = [[4, 4, 8, 8], [4, 8, 12, 16], [4, 8, 14, 16]];
 var gui;
 var serial; // variable to hold an instance of the serialport library
 var portName = '/dev/cu.usbmodem1421'; // fill in your serial port name herev
@@ -69,7 +70,7 @@ function setup() {
 }
 
 function draw() {
-  gui.updateBreathingVal(getBreathingValue(pattern1));
+  gui.updateBreathingVal(getBreathingValue(patterns[pattern]));
   gui.draw();
 }
 
