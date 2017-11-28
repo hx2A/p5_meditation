@@ -1,7 +1,7 @@
 /*
 Test Gui
 */
-class TestGui {
+class TestVisualization {
   constructor() {
     this.breathingState = "breathe in";
     this.breathingVal = 0;
@@ -32,8 +32,11 @@ class TestGui {
 Main P5 Sketch
 */
 
-var pattern = 0;
-var patterns = [[4, 4, 8, 8], [4, 8, 12, 16], [4, 8, 14, 16]];
+var patterns = {'simple': [4, 4, 8, 8],
+                'square': [4, 8, 12, 16],
+                'hard': [4, 8, 14, 16]};
+var patternName = Object.keys(patterns);
+var visualization;
 var gui;
 var serial; // variable to hold an instance of the serialport library
 var portName = '/dev/cu.usbmodem1421'; // fill in your serial port name herev
@@ -61,17 +64,32 @@ function preload() {
 function setup() {
   console.log("in setup");
   createCanvas(windowWidth,windowHeight);
+
+  // serial connection setup
   serial = new p5.SerialPort(); // make a new instance of the serialport library
   serial.on('data', serialEvent); // callback for when new data arrives
   serial.on('error', serialError); // callback for errors
   serial.open(portName); // open a serial port
-  gui = new TestGui();
-  gui.setup();
+
+  // user interface gui
+  gui = createGui('User Controls');
+  gui.hide();
+  gui.addGlobals('patternName');
+
+  // heartbeat / breathing visualization
+  visualization = new TestVisualization();
+  visualization.setup();
 }
 
 function draw() {
-  gui.updateBreathingVal(getBreathingValue(patterns[pattern]));
-  gui.draw();
+  if (mouseX < 250 && mouseY < 250) {
+    gui.show();
+  } else {
+    gui.hide();
+  }
+
+  visualization.updateBreathingVal(getBreathingValue(patterns[patternName]));
+  visualization.draw();
 }
 
 function getBreathingValue(pattern) {
