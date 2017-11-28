@@ -21,5 +21,21 @@ void loop() {
   delay(pauseDuration);
   Serial.println("heartbeat");
   delay(pauseDuration);
+  Serial.println("sustain_on");
+
+  Serial.println("heartbeat");
+  delay(pauseDuration);
+  Serial.println("heartbeat");
+  delay(pauseDuration);
+  Serial.println("heartbeat");
+  delay(pauseDuration);
   Serial.println("change_instrument");
+
+  Serial.println("heartbeat");
+  delay(pauseDuration);
+  Serial.println("heartbeat");
+  delay(pauseDuration);
+  Serial.println("heartbeat");
+  delay(pauseDuration);
+  Serial.println("sustain_off");
 }
