@@ -9,10 +9,10 @@ boolean voiceButtonOn;
 boolean noteButtonOn;
 boolean offButtonOn;
 const int OUTPUT_TYPE = SERIAL_PLOTTER;
-const int sustainPin = 11;
-const int voicePin = 9;
-const int notePin = 12;
-const int offPin = 10;
+const int sustainPin = 11; //red
+const int voicePin = 9; // red
+const int notePin = 12; // blue
+const int offPin = 10; // orange
 const int PIN_INPUT = A0;
 const int PIN_BLINK = 13;    // Pin 13 is the on-board LED
 const int PIN_FADE = 5;
