@@ -108,6 +108,3 @@ void loop() {
   // pause 20 ms
   delay(20);
 }
-
-
-
