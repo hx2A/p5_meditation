@@ -5,7 +5,8 @@ class TestVisualization {
   constructor() {
     this.breathingState = "breathe in";
     this.breathingVal = 0;
-    this.radius = min(width,height)/2;
+    this.radius = min(width, height) / 2;
+    this.lastHeartbeat = 0;
   }
 
   setup() {
@@ -20,13 +21,58 @@ class TestVisualization {
     this.breathingVal = val;
   }
 
+  reportHeartbeat() {
+    this.lastHeartbeat = millis();
+  }
+
   draw() {
-    background(128);
+    background(255);
     // draw visualization to the screen
-    //console.log(this.breathing_state, this.breathing_val);
-  ellipse(width/2,height/2,this.radius*this.breathingVal,this.radius*this.breathingVal);
+    if (this.lastHeartbeat + 50 > millis()) {
+      fill(255, 0, 0);
+    } else {
+      fill(128);
+    }
+    ellipse(width / 2, height / 2, this.radius * this.breathingVal, this.radius * this.breathingVal);
   }
 }
+
+class TestVisualization2 {
+  constructor() {
+    this.breathingState = "breathe in";
+    this.breathingVal = 0;
+    this.radius = min(width, height) / 2;
+    this.lastHeartbeat = 0;
+  }
+
+  setup() {
+    ellipseMode(RADIUS);
+  }
+
+  updateBreathingState(state) {
+    this.breathingState = state;
+  }
+
+  updateBreathingVal(val) {
+    this.breathingVal = val;
+  }
+
+  reportHeartbeat() {
+    this.lastHeartbeat = millis();
+  }
+
+  draw() {
+    background(255);
+    // draw visualization to the screen
+    if (this.lastHeartbeat + 50 > millis()) {
+      fill(0, 255, 255);
+    } else {
+      fill(128);
+    }
+    ellipse(width / 2, height / 2, this.radius * this.breathingVal, this.radius * this.breathingVal);
+  }
+}
+
 
 /*
 Main P5 Sketch
@@ -36,6 +82,11 @@ var patterns = {'simple': [4, 4, 8, 8],
                 'square': [4, 8, 12, 16],
                 'hard': [4, 8, 14, 16]};
 var patternName = Object.keys(patterns);
+var visualizations = {'Test Visualization': TestVisualization,
+                      'Test Visualization 2': TestVisualization2};
+var visualizationName = Object.keys(visualizations);
+var currentVisualizationName = visualizationName[0];
+
 var visualization;
 var gui;
 var serial; // variable to hold an instance of the serialport library
@@ -74,10 +125,10 @@ function setup() {
   // user interface gui
   gui = createGui('User Controls');
   gui.hide();
-  gui.addGlobals('patternName');
+  gui.addGlobals('patternName', 'visualizationName');
 
   // heartbeat / breathing visualization
-  visualization = new TestVisualization();
+  visualization = new visualizations[currentVisualizationName]();
   visualization.setup();
 }
 
@@ -88,12 +139,18 @@ function draw() {
     gui.hide();
   }
 
+  if (currentVisualizationName != visualizationName) {
+    currentVisualizationName = visualizationName;
+    visualization = new visualizations[currentVisualizationName]();
+    visualization.setup();
+  }
+
   visualization.updateBreathingVal(getBreathingValue(patterns[patternName]));
   visualization.draw();
 }
 
 function getBreathingValue(pattern) {
-  var t = millis() / 1000.0%pattern[3]; // breathing pattern repeats itself every 16 seconds
+  var t = millis() / 1000.0 % pattern[3]; // breathing pattern repeats itself every 16 seconds
   var h = 0;
   if (t < pattern[0]) {
     //breathe in
@@ -117,7 +174,7 @@ function serialEvent() {
   var input = serial.readLine();
   //store it in a global variable
   if (input == "heartbeat") {
-    playHeartbeat();
+    heartbeatEvent();
   } else if (input == "change_note") {
     changeNote();
   } else if (input == "change_instrument") {
@@ -136,16 +193,18 @@ function serialError(err) {
   console.log('Something went wrong with the serial port. ' + err);
 }
 
-function playHeartbeat() {
+function heartbeatEvent() {
+  visualization.reportHeartbeat();
+
   sounds[instruments[instrument]][echo][note].play();
   console.log('heartbeat');
 }
 function changeNote() {
-  note = (note+1)%7;
+  note = (note + 1) % 7;
   console.log('change note');
 }
 function changeInstrument() {
-  instrument = (instrument+1)%instruments.length;
+  instrument = (instrument + 1) % instruments.length;
   console.log('change instrument');
 }
 function sustainOn() {
