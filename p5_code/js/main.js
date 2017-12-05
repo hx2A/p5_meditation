@@ -73,6 +73,45 @@ class TestVisualization2 {
   }
 }
 
+class CircleVisualization {
+  constructor() {
+    this.breathingState = "breathe in";
+    this.breathingVal = 0;
+    this.radius = min(width, height) / 2;
+    this.lastHeartbeat = 0;
+    this.circle;
+    this.circleHeartbeat;
+  }
+
+  setup() {
+    this.circle = loadImage("images/circle.png");
+    this.circleHeartbeat = loadImage("images/pinkcircle.png");
+    ellipseMode(RADIUS);
+  }
+
+  updateBreathingState(state) {
+    this.breathingState = state;
+  }
+
+  updateBreathingVal(val) {
+    this.breathingVal = val;
+  }
+
+  reportHeartbeat() {
+    this.lastHeartbeat = millis();
+  }
+
+  draw() {
+    background(255);
+    // draw visualization to the screen
+    if (this.lastHeartbeat + 50 > millis()) {
+      image(this.circleHeartbeat, width/2, height/2, 400*this.breathingVal, 400*this.breathingVal);
+    } else {
+      image(this.circle, width/2, height/2, 400*this.breathingVal, 400*this.breathingVal);
+    }
+  }
+}
+
 
 /*
 Main P5 Sketch
@@ -83,7 +122,8 @@ var patterns = {'simple': [4, 4, 8, 8],
                 'hard': [4, 8, 14, 16]};
 var patternName = Object.keys(patterns);
 var visualizations = {'Test Visualization': TestVisualization,
-                      'Test Visualization 2': TestVisualization2};
+                      'Test Visualization 2': TestVisualization2,
+                      'Circle Visualization': CircleVisualization};
 var visualizationName = Object.keys(visualizations);
 var currentVisualizationName = visualizationName[0];
 
@@ -115,6 +155,8 @@ function preload() {
 function setup() {
   console.log("in setup");
   createCanvas(windowWidth,windowHeight);
+  ellipseMode(RADIUS);
+  imageMode(CENTER);
 
   // serial connection setup
   serial = new p5.SerialPort(); // make a new instance of the serialport library

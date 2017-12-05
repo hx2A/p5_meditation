@@ -15,7 +15,7 @@ const int notePin = 12; // blue
 const int offPin = 10; // orange
 const int PIN_INPUT = A0;
 const int PIN_BLINK = 13;    // Pin 13 is the on-board LED
-const int PIN_FADE = 5;
+const int PIN_FADE = 4;
 const int THRESHOLD = 550;   // Adjust this number to avoid noise when idle
 int channelNumber;
 int noteNumber;
@@ -108,3 +108,6 @@ void loop() {
   // pause 20 ms
   delay(20);
 }
+
+
+
