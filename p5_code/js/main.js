@@ -159,7 +159,7 @@ function setup() {
   imageMode(CENTER);
 
   // serial connection setup
-  serial = new p5.SerialPort("172.16.229.224"); // make a new instance of the serialport library
+  serial = new p5.SerialPort(); // make a new instance of the serialport library
   serial.on('data', serialEvent); // callback for when new data arrives
   serial.on('error', serialError); // callback for errors
   serial.open(portName); // open a serial port
