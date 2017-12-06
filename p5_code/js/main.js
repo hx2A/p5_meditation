@@ -1,7 +1,7 @@
 /*
 Test Gui
 */
-class TestVisualization {
+class CircleVisualization1 {
   constructor() {
     this.breathingState = "breathe in";
     this.breathingVal = 0;
@@ -37,7 +37,7 @@ class TestVisualization {
   }
 }
 
-class TestVisualization2 {
+class CircleVisualization2 {
   constructor() {
     this.breathingState = "breathe in";
     this.breathingVal = 0;
@@ -73,7 +73,7 @@ class TestVisualization2 {
   }
 }
 
-class CircleVisualization {
+class RingVisualization {
   constructor() {
     this.breathingState = "breathe in";
     this.breathingVal = 0;
@@ -121,9 +121,9 @@ var patterns = {'simple': [4, 4, 8, 8],
                 'square': [4, 8, 12, 16],
                 'hard': [4, 8, 14, 16]};
 var patternName = Object.keys(patterns);
-var visualizations = {'Test Visualization': TestVisualization,
-                      'Test Visualization 2': TestVisualization2,
-                      'Circle Visualization': CircleVisualization};
+var visualizations = {'Circle Visualization 1': CircleVisualization1,
+                      'Circle Visualization 2': CircleVisualization2,
+                      'Ring Visualization 1': RingVisualization};
 var visualizationName = Object.keys(visualizations);
 var currentVisualizationName = visualizationName[0];
 
