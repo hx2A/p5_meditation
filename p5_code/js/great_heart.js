@@ -12,7 +12,8 @@ function GreatHeart()
     'Circle Visualization 1': CircleVisualization1,
     'Circle Visualization 2': CircleVisualization2,
     'Ring Visualization 1': RingVisualization,
-    'Rectangle Visualization 1': RectangleVisualization
+    'Rectangle Visualization 1': RectangleVisualization,
+    'Polygon Visualization 1': PolygonVisualization
   };
   visualizationName = Object.keys(visualizations);
   currentVisualizationName = visualizationName[0];

@@ -28,6 +28,7 @@ function Intro() {
     logo = loadImage("images/great-heart.png");
   }
   this.enter = function() {
+    fill(0);
     imageMode(CENTER);
     textSize(16);
     textAlign(CENTER);
