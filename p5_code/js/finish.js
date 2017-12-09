@@ -3,9 +3,9 @@ function Finish()
   // layout variables
   let centerX = width / 2;
   let buttonY = height / 2;
-  let buttonWidth = 200;
+  let buttonWidth = 300;
   let buttonHeight = 100;
-  let textVerticalOffset = 150;
+  let textVerticalOffset = 50;
 
   let button;
   var me;
@@ -25,9 +25,9 @@ function Finish()
   this.enter = function()
   {
     me = this;
-
+    fill(0);
     imageMode(CENTER);
-    textSize(16);
+    textSize(32);
     textAlign(CENTER);
 
     var button = initButton("Back to start page", centerX, buttonY,
@@ -40,8 +40,8 @@ function Finish()
 
   this.draw = function()
   {
-    background(220);
-    text("Thank you for participating in our project!", centerX, buttonY + textVerticalOffset);
+    background(255-(50*sin(millis()/1000)));
+    text("Thank you for participating in our project!", centerX, buttonY - textVerticalOffset);
   }
 
   this.keyPressed = function()

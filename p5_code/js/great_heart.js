@@ -98,7 +98,7 @@ function GreatHeart()
 
   function stopChallenge() {
     // TODO: change
-    if (startTime + 15 * 1000 < millis()) {
+    if (startTime + 5 * 1000 < millis()) {
       me.sceneManager.showScene( Finish );
     }
   }
