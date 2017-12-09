@@ -147,3 +147,52 @@ class RectangleVisualization {
     image(this.rectangle, width / 2, height / 2, 400, height * this.breathingVal);
   }
 }
+
+class PolygonVisualization {
+  constructor() {
+    this.breathingState = "breathe in";
+    this.breathingVal = 0;
+    this.radius = min(width, height) / 2;
+    this.lastHeartbeat = 0;
+
+  }
+
+  setup() {
+  fill(83,187,186)
+  }
+
+  updateBreathingState(state) {
+    this.breathingState = state;
+  }
+
+  updateBreathingVal(val) {
+    this.breathingVal = val;
+  }
+
+  reportHeartbeat() {
+    this.lastHeartbeat = millis();
+  }
+
+  draw() {
+    // draw visualization to the screen
+    if (this.lastHeartbeat + 200 > millis()) {
+      var polygonHeartbeat = (millis() - this.lastHeartbeat) / 50;
+      var polygonFade = lerpColor(color(6, 38, 104), color(9, 70, 149), polygonHeartbeat);
+      background(polygonFade);
+    } else {
+      background(6, 38, 104);
+    }
+    this.polygon(width / 2, height / 2, this.breathingVal*375, floor(this.breathingVal * 20) + 3);
+  }
+
+  polygon(x, y, radius, npoints) {
+    var angle = TWO_PI / npoints;
+    beginShape();
+    for (var a = 0; a < TWO_PI; a += angle) {
+      var sx = x + cos(a) * radius;
+      var sy = y + sin(a) * radius;
+      vertex(sx, sy);
+    }
+    endShape(CLOSE);
+  }
+}
