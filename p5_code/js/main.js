@@ -105,9 +105,9 @@ class RingVisualization {
     background(255);
     // draw visualization to the screen
     if (this.lastHeartbeat + 50 > millis()) {
-      image(this.circleHeartbeat, width/2, height/2, 400*this.breathingVal, 400*this.breathingVal);
+      image(this.circleHeartbeat, width / 2, height / 2, 400 * this.breathingVal, 400 * this.breathingVal);
     } else {
-      image(this.circle, width/2, height/2, 400*this.breathingVal, 400*this.breathingVal);
+      image(this.circle, width / 2, height / 2, 400 * this.breathingVal, 400 * this.breathingVal);
     }
   }
 }
@@ -117,13 +117,17 @@ class RingVisualization {
 Main P5 Sketch
 */
 
-var patterns = {'simple': [4, 4, 8, 8],
-                'square': [4, 8, 12, 16],
-                'hard': [4, 8, 14, 16]};
+var patterns = {
+  'simple': [4, 4, 8, 8],
+  'square': [4, 8, 12, 16],
+  'hard': [4, 8, 14, 16]
+};
 var patternName = Object.keys(patterns);
-var visualizations = {'Circle Visualization 1': CircleVisualization1,
-                      'Circle Visualization 2': CircleVisualization2,
-                      'Ring Visualization 1': RingVisualization};
+var visualizations = {
+  'Circle Visualization 1': CircleVisualization1,
+  'Circle Visualization 2': CircleVisualization2,
+  'Ring Visualization 1': RingVisualization
+};
 var visualizationName = Object.keys(visualizations);
 var currentVisualizationName = visualizationName[0];
 
@@ -136,7 +140,8 @@ var notes = ["a", "b", "c", "d", "e", "f", "g"];
 var sounds = Object();
 var instrument = 0;
 var instruments = ["spacepiano", "sinebells", "nylonguitar", "heavensshores",
-                   "bowingtitanium", "magicwaters", "dusk"];
+  "bowingtitanium", "magicwaters", "dusk"
+];
 var echo = "regular";
 
 function preload() {
@@ -154,7 +159,7 @@ function preload() {
 
 function setup() {
   console.log("in setup");
-  createCanvas(windowWidth,windowHeight);
+  createCanvas(windowWidth, windowHeight);
   ellipseMode(RADIUS);
   imageMode(CENTER);
 
@@ -241,22 +246,27 @@ function heartbeatEvent() {
   sounds[instruments[instrument]][echo][note].play();
   console.log('heartbeat');
 }
+
 function changeNote() {
   note = (note + 1) % 7;
   console.log('change note');
 }
+
 function changeInstrument() {
   instrument = (instrument + 1) % instruments.length;
   console.log('change instrument');
 }
+
 function sustainOn() {
   echo = "sustain";
   console.log('sustain on');
 }
+
 function sustainOff() {
   echo = "regular";
   console.log('sustain off');
 }
+
 function offButton() {
   console.log('off');
 }

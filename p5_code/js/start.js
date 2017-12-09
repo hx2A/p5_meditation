@@ -19,7 +19,6 @@ function preload() {
 
 function setup()
 {
-    // createCanvas(800, 500);
     createCanvas(windowWidth,windowHeight);
 
     var mgr = new SceneManager();

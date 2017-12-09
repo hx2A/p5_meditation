@@ -1,86 +1,21 @@
-class TestVisualization {
-  constructor() {
-    this.breathingState = "breathe in";
-    this.breathingVal = 0;
-    this.radius = min(width, height) / 2;
-    this.lastHeartbeat = 0;
-  }
-
-  setup() {
-    ellipseMode(RADIUS);
-  }
-
-  updateBreathingState(state) {
-    this.breathingState = state;
-  }
-
-  updateBreathingVal(val) {
-    this.breathingVal = val;
-  }
-
-  reportHeartbeat() {
-    this.lastHeartbeat = millis();
-  }
-
-  draw() {
-    background(255);
-    // draw visualization to the screen
-    if (this.lastHeartbeat + 50 > millis()) {
-      fill(255, 0, 0);
-    } else {
-      fill(128);
-    }
-    ellipse(width / 2, height / 2, this.radius * this.breathingVal, this.radius * this.breathingVal);
-  }
-}
-
-class TestVisualization2 {
-  constructor() {
-    this.breathingState = "breathe in";
-    this.breathingVal = 0;
-    this.radius = min(width, height) / 2;
-    this.lastHeartbeat = 0;
-  }
-
-  setup() {
-    ellipseMode(RADIUS);
-  }
-
-  updateBreathingState(state) {
-    this.breathingState = state;
-  }
-
-  updateBreathingVal(val) {
-    this.breathingVal = val;
-  }
-
-  reportHeartbeat() {
-    this.lastHeartbeat = millis();
-  }
-
-  draw() {
-    background(255);
-    // draw visualization to the screen
-    if (this.lastHeartbeat + 50 > millis()) {
-      fill(0, 255, 255);
-    } else {
-      fill(128);
-    }
-    ellipse(width / 2, height / 2, this.radius * this.breathingVal, this.radius * this.breathingVal);
-  }
-}
-
 var patterns = {'simple': [4, 4, 8, 8],
                 'square': [4, 8, 12, 16],
                 'hard': [4, 8, 14, 16]};
 var patternName = Object.keys(patterns);
-var visualizations = {'Test Visualization': TestVisualization,
-                      'Test Visualization 2': TestVisualization2};
-var visualizationName = Object.keys(visualizations);
-var currentVisualizationName = visualizationName[0];
+var visualizations;
+var visualizationName;
+var currentVisualizationName;
 
 function GreatHeart()
 {
+  visualizations = {
+    'Circle Visualization 1': CircleVisualization1,
+    'Circle Visualization 2': CircleVisualization2,
+    'Ring Visualization 1': RingVisualization
+  };
+  visualizationName = Object.keys(visualizations);
+  currentVisualizationName = visualizationName[0];
+
   var visualization;
   var gui;
   var serial; // variable to hold an instance of the serialport library
