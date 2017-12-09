@@ -108,3 +108,42 @@ class RingVisualization {
     }
   }
 }
+
+class RectangleVisualization {
+  constructor() {
+    this.breathingState = "breathe in";
+    this.breathingVal = 0;
+    this.radius = min(width, height) / 2;
+    this.lastHeartbeat = 0;
+    this.rectangle;
+
+  }
+
+  setup() {
+    this.rectangle = loadImage("images/bluerectangle2.png");
+  }
+
+  updateBreathingState(state) {
+    this.breathingState = state;
+  }
+
+  updateBreathingVal(val) {
+    this.breathingVal = val;
+  }
+
+  reportHeartbeat() {
+    this.lastHeartbeat = millis();
+  }
+
+  draw() {
+    // draw visualization to the screen
+    if (this.lastHeartbeat + 200 > millis()) {
+      var rectangleHeartbeat = (millis() - this.lastHeartbeat) / 50;
+      var rectangleFade = lerpColor(color(6, 38, 104), color(9, 70, 149), rectangleHeartbeat);
+      background(rectangleFade);
+    } else {
+      background(6, 38, 104);
+    }
+    image(this.rectangle, width / 2, height / 2, 400, height * this.breathingVal);
+  }
+}

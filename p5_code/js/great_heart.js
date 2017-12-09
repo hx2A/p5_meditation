@@ -11,7 +11,8 @@ function GreatHeart()
   visualizations = {
     'Circle Visualization 1': CircleVisualization1,
     'Circle Visualization 2': CircleVisualization2,
-    'Ring Visualization 1': RingVisualization
+    'Ring Visualization 1': RingVisualization,
+    'Rectangle Visualization 1': RectangleVisualization
   };
   visualizationName = Object.keys(visualizations);
   currentVisualizationName = visualizationName[0];
@@ -102,7 +103,7 @@ function GreatHeart()
   }
 
   function stopDuration() {
-    if (startTime + 15 * 1000 < millis()) {
+    if (startTime + 120 * 1000 < millis()) {
       me.sceneManager.showScene( Finish );
     }
   }
