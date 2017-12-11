@@ -17,7 +17,7 @@ function GreatHeart() {
     'Polygon Visualization 1': PolygonVisualization
   };
   visualizationName = Object.keys(visualizations);
-  currentVisualizationName = visualizationName[0];
+  currentVisualizationName = visualizationName[2];
 
   var visualization;
   var gui;
