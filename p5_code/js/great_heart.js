@@ -30,7 +30,9 @@ function GreatHeart() {
   var instruments = ["spacepiano", "sinebells", "nylonguitar", "heavensshores",
     "bowingtitanium", "magicwaters", "dusk"
   ];
-  // take out magicwaters, dusk - maybe add warm pad, something else softer/less scary sounding ? 
+  // take out magicwaters, dusk - maybe add warm pad,
+  // something else softer/less scary sounding ? vibrasine 4ths?
+  // liquid celeste?
   var echo = "regular";
 
   var stopTest;

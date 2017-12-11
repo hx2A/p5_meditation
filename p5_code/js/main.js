@@ -142,6 +142,7 @@ var instrument = 0;
 var instruments = ["spacepiano", "sinebells", "nylonguitar", "heavensshores",
   "bowingtitanium", "magicwaters", "dusk"
 ];
+//take out magicwaters, dusk and replace
 var echo = "regular";
 
 function preload() {
