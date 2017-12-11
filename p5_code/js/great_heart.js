@@ -26,7 +26,7 @@ function GreatHeart()
   var notes = ["a", "b", "c", "d", "e", "f", "g"];
   var sounds;
   var instrument = 0;
-  var instruments = ["spacepiano", "sinebells", "nylonguitar", "heavensshores",
+  var instruments = ["spacepiano",  "sinebells", "nylonguitar", "pianofreeze",
                      "bowingtitanium", "magicwaters", "dusk"];
   var echo = "regular";
 
