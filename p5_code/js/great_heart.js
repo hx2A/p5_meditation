@@ -32,7 +32,7 @@ function GreatHeart() {
   ];
   // take out magicwaters, dusk - maybe add warm pad,
   // something else softer/less scary sounding ? vibrasine 4ths?
-  // liquid celeste?
+  // liquid celeste? cedar? glassians? growing warmer jx-10? sea foam?
   var echo = "regular";
 
   var stopTest;
