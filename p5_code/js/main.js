@@ -139,7 +139,7 @@ var note = 0;
 var notes = ["a", "b", "c", "d", "e", "f", "g"];
 var sounds = Object();
 var instrument = 0;
-var instruments = ["spacepiano", "sinebells", "nylonguitar", "pianofreeze",
+var instruments = ["spacepiano", "sinebells", "nylonguitar", "heavensshores",
   "bowingtitanium", "magicwaters", "dusk"
 ];
 var echo = "regular";

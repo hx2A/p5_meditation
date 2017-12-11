@@ -1,13 +1,14 @@
-var patterns = {'simple': [4, 4, 8, 8],
-                'square': [4, 8, 12, 16],
-                'hard': [4, 8, 14, 16]};
+var patterns = {
+  'simple': [4, 4, 8, 8],
+  'square': [4, 8, 12, 16],
+  'hard': [4, 8, 14, 16]
+};
 var patternName = Object.keys(patterns);
 var visualizations;
 var visualizationName;
 var currentVisualizationName;
 
-function GreatHeart()
-{
+function GreatHeart() {
   visualizations = {
     'Circle Visualization 1': CircleVisualization1,
     'Circle Visualization 2': CircleVisualization2,
@@ -26,8 +27,10 @@ function GreatHeart()
   var notes = ["a", "b", "c", "d", "e", "f", "g"];
   var sounds;
   var instrument = 0;
-  var instruments = ["spacepiano",  "sinebells", "nylonguitar", "pianofreeze",
-                     "bowingtitanium", "magicwaters", "dusk"];
+  var instruments = ["spacepiano", "sinebells", "nylonguitar", "heavensshores",
+    "bowingtitanium", "magicwaters", "dusk"
+  ];
+  // take out magicwaters, dusk - maybe add warm pad, something else softer/less scary sounding ? 
   var echo = "regular";
 
   var stopTest;
@@ -35,8 +38,7 @@ function GreatHeart()
 
   var me = this;
 
-  this.enter = function()
-  {
+  this.enter = function() {
     console.log("in great heart setup");
 
     console.log(me.sceneArgs);
@@ -68,8 +70,7 @@ function GreatHeart()
     }
   }
 
-  this.draw = function()
-  {
+  this.draw = function() {
     stopTest();
 
     if (mouseX < 250 && mouseY < 250) {
@@ -88,24 +89,22 @@ function GreatHeart()
     visualization.draw();
   }
 
-  this.keyPressed = function()
-  {
-    if ( key == 'q' || key == 'Q' )
-    {
-      this.sceneManager.showScene( Intro );
+  this.keyPressed = function() {
+    if (key == 'q' || key == 'Q') {
+      this.sceneManager.showScene(Intro);
     }
   }
 
   function stopChallenge() {
     // TODO: change
     if (startTime + 5 * 1000 < millis()) {
-      me.sceneManager.showScene( Finish );
+      me.sceneManager.showScene(Finish);
     }
   }
 
   function stopDuration() {
     if (startTime + 120 * 1000 < millis()) {
-      me.sceneManager.showScene( Finish );
+      me.sceneManager.showScene(Finish);
     }
   }
 
@@ -159,25 +158,31 @@ function GreatHeart()
     sounds[instruments[instrument]][echo][note].play();
     console.log('heartbeat');
   }
+
   function changeNote() {
     note = (note + 1) % 7;
     console.log('change note');
   }
+
   function changeInstrument() {
     instrument = (instrument + 1) % instruments.length;
     console.log('change instrument');
   }
+
   function sustainOn() {
     echo = "sustain";
     console.log('sustain on');
   }
+
   function sustainOff() {
     echo = "regular";
     console.log('sustain off');
   }
+
   function offButton() {
     console.log('off');
   }
+
   function pulseMessage(bpm) {
     console.log('bmp:', bpm);
   }
