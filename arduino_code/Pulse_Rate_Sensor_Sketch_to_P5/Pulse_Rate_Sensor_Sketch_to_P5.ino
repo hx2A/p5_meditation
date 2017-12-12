@@ -64,6 +64,9 @@ void loop() {
   if (pulseSensor.sawStartOfBeat()) {
     //   pulseSensor.outputBeat();
     Serial.println("heartbeat");
+    Serial.print("pulse,");
+    Serial.println(pulseSensor.getBeatsPerMinute());
+    
   }
 
   int sustainRead = digitalRead(sustainPin);

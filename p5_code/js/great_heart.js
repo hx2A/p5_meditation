@@ -7,6 +7,8 @@ var patternName = Object.keys(patterns);
 var visualizations;
 var visualizationName;
 var currentVisualizationName;
+var lastNoteTime;
+var noteInterval;
 
 function GreatHeart() {
   visualizations = {
@@ -28,7 +30,7 @@ function GreatHeart() {
   var sounds;
   var instrument = 0;
   var instruments = ["spacepiano", "sinebells", "nylonguitar", "heavensshores",
-      "magicwaters", "bowingtitanium", "dusk"
+    "magicwaters", "bowingtitanium", "dusk"
   ];
 
   var echo = "regular";
@@ -39,9 +41,10 @@ function GreatHeart() {
   var me = this;
 
   this.enter = function() {
-    console.log("in great heart setup");
+    console.log("in great heart enter function");
 
-    console.log(me.sceneArgs);
+    lastNoteTime = millis();
+    noteInterval = 1200;
 
     sounds = this.sceneManager.sounds;
 
@@ -72,6 +75,12 @@ function GreatHeart() {
 
   this.draw = function() {
     stopTest();
+
+    if (millis() > lastNoteTime + noteInterval) {
+      visualization.reportHeartbeat();
+      sounds[instruments[instrument]][echo][note].play();
+      lastNoteTime = millis();
+    }
 
     if (mouseX < 250 && mouseY < 250) {
       gui.show();
@@ -153,9 +162,9 @@ function GreatHeart() {
   }
 
   function heartbeatEvent() {
-    visualization.reportHeartbeat();
+    // visualization.reportHeartbeat();
 
-    sounds[instruments[instrument]][echo][note].play();
+    // sounds[instruments[instrument]][echo][note].play();
     console.log('heartbeat');
   }
 
@@ -184,6 +193,7 @@ function GreatHeart() {
   }
 
   function pulseMessage(bpm) {
-    console.log('bmp:', bpm);
+    console.log('bpm:', bpm);
+    noteInterval = 60000 / bpm;
   }
 }
