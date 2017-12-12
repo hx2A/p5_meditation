@@ -32,9 +32,9 @@ function GreatHeart() {
   var notes = ["a", "b", "c", "d", "e", "f", "g"];
   var sounds;
   var instrument = 0;
-  var instruments = ["spacepiano", "sinebells", "nylonguitar", "heavensshores",
-    "magicwaters", "bowingtitanium", "dusk"
-  ];
+  var instruments = ["spacepiano", "nylonguitar", "heavensshores","bowingtitanium"
+    ];
+    //took out "sinebells", "magicwaters", "dusk"
 
   var echo = "regular";
 
@@ -204,7 +204,7 @@ function GreatHeart() {
   function pulseMessage(bpm) {
     console.log('bpm:', bpm);
     if (initialPulse == undefined) {
-      initialPulse = 2 * bpm;
+      initialPulse = bpm;
       console.log(initialPulse);
     }
     pulse = bpm;
