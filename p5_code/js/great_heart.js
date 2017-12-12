@@ -28,7 +28,7 @@ function GreatHeart() {
   var sounds;
   var instrument = 0;
   var instruments = ["spacepiano", "sinebells", "nylonguitar", "heavensshores",
-      "bowingtitanium", "magicwaters", "dusk"
+      "magicwaters", "bowingtitanium", "dusk"
   ];
 
   var echo = "regular";
