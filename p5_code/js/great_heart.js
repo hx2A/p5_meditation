@@ -9,17 +9,20 @@ var visualizationName;
 var currentVisualizationName;
 var lastNoteTime;
 var noteInterval;
+var hideMenu = ["No", "Yes"];
+var pulse;
+var initialPulse;
 
 function GreatHeart() {
   visualizations = {
+    'Ring Visualization 1': RingVisualization,
     'Circle Visualization 1': CircleVisualization1,
     'Circle Visualization 2': CircleVisualization2,
-    'Ring Visualization 1': RingVisualization,
     'Rectangle Visualization 1': RectangleVisualization,
     'Polygon Visualization 1': PolygonVisualization
   };
   visualizationName = Object.keys(visualizations);
-  currentVisualizationName = visualizationName[2];
+  currentVisualizationName = visualizationName[0];
 
   var visualization;
   var gui;
@@ -55,16 +58,20 @@ function GreatHeart() {
     serial.open(portName); // open a serial port
 
     // user interface gui
-    gui = createGui('User Controls');
-    gui.hide();
-    gui.addGlobals('patternName', 'visualizationName');
-
+    if (gui == undefined) {
+      gui = createGui('Breathing Visualization Options');
+      gui.addGlobals('patternName', 'visualizationName', 'hideMenu');
+    } else {
+      gui.show();
+      hideMenu = "No";
+    }
     // heartbeat / breathing visualization
     visualization = new visualizations[currentVisualizationName]();
     visualization.setup();
 
     // stopping conditions
     startTime = millis();
+    initialPulse = undefined;
 
     if (this.sceneArgs == '1') {
       stopTest = stopChallenge;
@@ -81,13 +88,13 @@ function GreatHeart() {
       sounds[instruments[instrument]][echo][note].play();
       lastNoteTime = millis();
     }
-
-    if (mouseX < 250 && mouseY < 250) {
-      gui.show();
-    } else {
-      gui.hide();
+    if (hideMenu == "Yes") {
+      if (mouseX < 250 && mouseY < 250) {
+        gui.show();
+      } else {
+        gui.hide();
+      }
     }
-
     if (currentVisualizationName != visualizationName) {
       currentVisualizationName = visualizationName;
       visualization = new visualizations[currentVisualizationName]();
@@ -101,19 +108,21 @@ function GreatHeart() {
   this.keyPressed = function() {
     if (key == 'q' || key == 'Q') {
       this.sceneManager.showScene(Intro);
+      gui.hide();
     }
   }
 
   function stopChallenge() {
-    // TODO: change
-    if (startTime + 5 * 1000 < millis()) {
-      me.sceneManager.showScene(Finish);
+    if (startTime + 30 * 1000 < millis() && pulse < initialPulse * 0.9) {
+      gui.hide();
+      me.sceneManager.showScene(Finish, [pulse, initialPulse]);
     }
   }
 
   function stopDuration() {
     if (startTime + 120 * 1000 < millis()) {
-      me.sceneManager.showScene(Finish);
+      gui.hide();
+      me.sceneManager.showScene(Finish, [pulse, initialPulse]);
     }
   }
 
@@ -131,7 +140,7 @@ function GreatHeart() {
       h = 0.5 + 0.5 * cos(PI * (t - pattern[1]) / (pattern[2] - pattern[1]));
     } else {
       //hold
-      h = 0;
+      h = 0.0001;
     }
     return h; // return where user is in breathing pattern
   }
@@ -194,6 +203,11 @@ function GreatHeart() {
 
   function pulseMessage(bpm) {
     console.log('bpm:', bpm);
+    if (initialPulse == undefined) {
+      initialPulse = 2 * bpm;
+      console.log(initialPulse);
+    }
+    pulse = bpm;
     noteInterval = 60000 / bpm;
   }
 }

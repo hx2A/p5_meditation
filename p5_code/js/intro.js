@@ -14,6 +14,7 @@ function Intro() {
   let textVerticalOffset = 130;
 
   var me = this;
+  var audioguide;
 
   function initButton(text, x, y, mouseClickedCallback) {
     var button = createButton(text);
@@ -26,41 +27,47 @@ function Intro() {
     return button;
   }
 
-function removeAllButtons () {
-  buttons.challenge.remove();
-  buttons.duration.remove();
-  buttons.instructions.remove();
+  function removeAllButtons() {
+    buttons.challenge.remove();
+    buttons.duration.remove();
+    buttons.instructions.remove();
 
-}
+  }
 
   this.setup = function() {
     logo = loadImage("images/great-heart.png");
   }
   this.enter = function() {
+    audioguide = this.sceneManager.audioguide;
     fill(0);
     imageMode(CENTER);
     textSize(16);
     textAlign(CENTER);
     buttons = {};
     buttons.challenge = initButton("Challenge", leftButtonX, buttonY, function() {
-      removeAllButtons ();
+      removeAllButtons();
+      audioguide.stop();
       me.sceneManager.showScene(GreatHeart, 1);
+      console.log("stop audio guide if playing");
     });
 
     buttons.duration = initButton("Duration", rightButtonX, buttonY, function() {
-      removeAllButtons ();
+      removeAllButtons();
+      audioguide.stop();
       me.sceneManager.showScene(GreatHeart, 2);
+      console.log("stop audio guide if playing");
     });
 
     buttons.instructions = initButton("Instructions", centerX, logoY + instructionButtonOffset, function() {
-      removeAllButtons ();
+      audioguide.play();
+      console.log("play audio guide");
 
     });
   }
 
 
   this.draw = function() {
-    background(255-(50*sin(millis()/1000)));
+    background(255 - (50 * sin(millis() / 1000)));
     image(logo, centerX, logoY, logo.width / 5, logo.height / 5);
     text("Please put on headphones to continue.", centerX, logoY + logoCaptionOffset);
     text("Reduce your heartrate by 10%", leftButtonX, buttonY + textVerticalOffset);

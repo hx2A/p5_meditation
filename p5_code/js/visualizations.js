@@ -158,7 +158,7 @@ class PolygonVisualization {
   }
 
   setup() {
-  fill(83,187,186)
+    fill(83, 187, 186)
   }
 
   updateBreathingState(state) {
@@ -182,7 +182,7 @@ class PolygonVisualization {
     } else {
       background(6, 38, 104);
     }
-    this.polygon(width / 2, height / 2, this.breathingVal*375, floor(this.breathingVal * 20) + 3);
+    this.polygon(width / 2, height / 2, this.breathingVal * 375, floor(this.breathingVal * 20) + 3);
   }
 
   polygon(x, y, radius, npoints) {

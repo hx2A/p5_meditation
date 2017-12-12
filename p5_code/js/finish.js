@@ -39,7 +39,7 @@ function Finish() {
 
   this.draw = function() {
     background(255 - (50 * sin(millis() / 1000)));
-    text("Thank you for participating in our project!", centerX, buttonY - textVerticalOffset*2);
+    text("Thank you for participating in our project!", centerX, buttonY - textVerticalOffset * 2);
     text("Your initial pulse: " + this.sceneArgs[1] + "   Final pulse: " + this.sceneArgs[0],
       centerX, buttonY - textVerticalOffset);
   }

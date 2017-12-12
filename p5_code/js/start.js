@@ -1,10 +1,13 @@
 var instruments = ["spacepiano", "sinebells", "nylonguitar", "heavensshores",
-                   "bowingtitanium", "magicwaters", "dusk"];
+  "bowingtitanium", "magicwaters", "dusk"
+];
 var notes = ["a", "b", "c", "d", "e", "f", "g"];
 var sounds;
+var audioguide;
 
 function preload() {
   sounds = Object();
+  audioguide = loadSound("audio/audioguide.mp3");
 
   for (var i = 0; i < instruments.length; i++) {
     sounds[instruments[i]] = Object();
@@ -17,12 +20,12 @@ function preload() {
   }
 }
 
-function setup()
-{
-    createCanvas(windowWidth,windowHeight);
+function setup() {
+  createCanvas(windowWidth, windowHeight);
 
-    var mgr = new SceneManager();
-    mgr.sounds = sounds;
-    mgr.wire();
-    mgr.showScene( Intro );
+  var mgr = new SceneManager();
+  mgr.sounds = sounds;
+  mgr.audioguide = audioguide;
+  mgr.wire();
+  mgr.showScene(Intro);
 }
