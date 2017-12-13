@@ -34,7 +34,7 @@ function GreatHeart() {
   var instrument = 0;
   var instruments = ["spacepiano", "nylonguitar", "heavensshores","bowingtitanium"
     ];
-    //took out "sinebells", "magicwaters", "dusk"
+    //removed "sinebells", "magicwaters", "dusk"
 
   var echo = "regular";
 
