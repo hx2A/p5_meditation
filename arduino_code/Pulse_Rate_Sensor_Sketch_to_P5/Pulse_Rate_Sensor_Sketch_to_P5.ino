@@ -1,28 +1,46 @@
-// define user constants
+/*
+ * Great Heart
+ *
+ * Midterm/final project for Introduction to Physical Computing
+ * Fall 2017
+ * Camilla Padgitt-Coles
+ * Jim Schmitz
+ *
+ * Arduino code. Receive pulse data from Pulse Sensor library and
+ * transmit to P5 sketch via serial library along with buttons press
+ * events.
+ */
 
+// interrupts definition must be before PulseSensorPlayground.h include file
 #define USE_ARDUINO_INTERRUPTS true
 #include <PulseSensorPlayground.h>
 
-// declare variables
+// button status variables
 boolean sustainOn;
 boolean voiceButtonOn;
 boolean noteButtonOn;
 boolean offButtonOn;
-const int OUTPUT_TYPE = SERIAL_PLOTTER;
+
+// button pins
 const int sustainPin = 11; //red
 const int voicePin = 9; // red
 const int notePin = 12; // blue
 const int offPin = 10; // orange
+
+// pulse sensor settings
+const int OUTPUT_TYPE = SERIAL_PLOTTER;
 const int PIN_INPUT = A0;
 const int PIN_BLINK = 13;    // Pin 13 is the on-board LED
 const int PIN_FADE = 4;
 const int THRESHOLD = 550;   // Adjust this number to avoid noise when idle
-int channelNumber;
-int noteNumber;
-byte midiChannel;
 
 PulseSensorPlayground pulseSensor;
 
+/**
+ * Setup function, run once on Arduino startup.
+ * 
+ * Serial connection to computer and connection to pulse sensor should both be ready to go.
+ */
 void setup() {
   Serial.begin(9600);
 
@@ -40,6 +58,7 @@ void setup() {
   pulseSensor.setThreshold(THRESHOLD);
 
   // Now that everything is ready, start reading the PulseSensor signal.
+  // if something is wrong, make a sign of some kind.
   if (!pulseSensor.begin()) {
 
     for (;;) {
@@ -51,22 +70,23 @@ void setup() {
     }
   }
 
-  // initialize variables
+  // button status variables
   sustainOn = false;
-  channelNumber = 0;
   voiceButtonOn = false;
-  noteNumber = 50;
   noteButtonOn = false;
   offButtonOn = false;
 }
 
+/**
+ * Loop function run repeatedly.
+ * 
+ * Check for button presses and pass heartbeat event information.
+ */
 void loop() {
   if (pulseSensor.sawStartOfBeat()) {
-    //   pulseSensor.outputBeat();
     Serial.println("heartbeat");
     Serial.print("pulse,");
-    Serial.println(pulseSensor.getBeatsPerMinute());
-    
+    Serial.println(pulseSensor.getBeatsPerMinute());    
   }
 
   int sustainRead = digitalRead(sustainPin);
@@ -104,13 +124,10 @@ void loop() {
   }
 
   /*
-     Wait a bit.
-     We don't output every sample, because our baud rate
-     won't support that much I/O.
-  */
-  // pause 20 ms
+   * Wait a bit.
+   * We don't output every sample, because our baud rate
+   * won't support that much I/O.
+   */
   delay(20);
 }
-
-
 
