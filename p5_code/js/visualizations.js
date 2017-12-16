@@ -1,3 +1,20 @@
+/*
+ * Great Heart
+ *
+ * Midterm/final project for Introduction to Physical Computing
+ * Fall 2017
+ * Camilla Padgitt-Coles
+ * Jim Schmitz
+ *
+ * Collection of visualization objects. Instances of these classes can be swapped
+ * in and out to change the visual experience. New visualizations can also be
+ * created very easily.
+ */
+
+
+/**
+ * Simple circle visualization class
+ */
 class CircleVisualization1 {
   constructor() {
     this.breathingState = "breathe in";
@@ -34,6 +51,9 @@ class CircleVisualization1 {
   }
 }
 
+/**
+ * Simple circle visualization class
+ */
 class CircleVisualization2 {
   constructor() {
     this.breathingState = "breathe in";
@@ -70,6 +90,9 @@ class CircleVisualization2 {
   }
 }
 
+/**
+ * Ring visualization class
+ */
 class RingVisualization {
   constructor() {
     this.breathingState = "breathe in";
@@ -109,6 +132,9 @@ class RingVisualization {
   }
 }
 
+/**
+ * Rectangle visualization class
+ */
 class RectangleVisualization {
   constructor() {
     this.breathingState = "breathe in";
@@ -148,6 +174,9 @@ class RectangleVisualization {
   }
 }
 
+/**
+ * Growing polygon visualization class
+ */
 class PolygonVisualization {
   constructor() {
     this.breathingState = "breathe in";

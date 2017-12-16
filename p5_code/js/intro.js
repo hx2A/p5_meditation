@@ -1,3 +1,18 @@
+/*
+ * Great Heart
+ *
+ * Midterm/final project for Introduction to Physical Computing
+ * Fall 2017
+ * Camilla Padgitt-Coles
+ * Jim Schmitz
+ *
+ * Introduction scene for Great Heart. Shows a screen with a few buttons and plays
+ * audio introduction.
+ */
+
+/**
+ * Great Heart Introduction scene
+ */
 function Intro() {
   let logo;
 
@@ -16,6 +31,9 @@ function Intro() {
   var me = this;
   var audioguide;
 
+  /**
+   * Helper function for creating identical buttons
+   */
   function initButton(text, x, y, mouseClickedCallback) {
     var button = createButton(text);
     button.size(buttonWidth, buttonHeight);
@@ -27,6 +45,12 @@ function Intro() {
     return button;
   }
 
+  /**
+   * Destroy buttons
+   *
+   * Necessary before moving to next scene so that when the scene manager comes
+   * back to this scene, we don't display duplicated buttons
+   */
   function removeAllButtons() {
     buttons.challenge.remove();
     buttons.duration.remove();
@@ -34,15 +58,26 @@ function Intro() {
 
   }
 
+  /**
+   * Setup function, run *once* the first time the scene is run and never again
+   */
   this.setup = function() {
     logo = loadImage("images/great-heart.png");
   }
+
+  /**
+   * Scene manager enter function
+   *
+   * Run each time the scene manager returns to this scene
+   */
   this.enter = function() {
     audioguide = this.sceneManager.audioguide;
     fill(0);
     imageMode(CENTER);
     textSize(16);
     textAlign(CENTER);
+
+    // Create 2 buttons with callbacks to stop audio guide if it is playing and remove buttons.
     buttons = {};
     buttons.challenge = initButton("Challenge", leftButtonX, buttonY, function() {
       removeAllButtons();
@@ -58,6 +93,7 @@ function Intro() {
       console.log("stop audio guide if playing");
     });
 
+    // Create button to play audio guide
     buttons.instructions = initButton("Instructions", centerX, logoY + instructionButtonOffset, function() {
       audioguide.play();
       console.log("play audio guide");
@@ -65,7 +101,11 @@ function Intro() {
     });
   }
 
-
+  /**
+   * Scene manager draw function
+   *
+   * Run once per frame
+   */
   this.draw = function() {
     background(255 - (50 * sin(millis() / 1000)));
     image(logo, centerX, logoY, logo.width / 5, logo.height / 5);
