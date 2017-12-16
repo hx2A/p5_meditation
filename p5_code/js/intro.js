@@ -19,10 +19,10 @@ function Intro() {
   // layout variables
   let centerX = width / 2;
   let logoY = height / 5;
-  let logoCaptionOffset = 100;
-  let instructionButtonOffset = 120;
+  let logoCaptionOffset = 125;
+  let instructionButtonOffset = 150;
   let buttonY = height / 1.7;
-  let buttonWidth = 250;
+  let buttonWidth = 275;
   let buttonHeight = 100;
   let leftButtonX = width / 3;
   let rightButtonX = 2 * width / 3;
@@ -74,7 +74,7 @@ function Intro() {
     audioguide = this.sceneManager.audioguide;
     fill(0);
     imageMode(CENTER);
-    textSize(16);
+    textSize(20);
     textAlign(CENTER);
 
     // Create 2 buttons with callbacks to stop audio guide if it is playing and remove buttons.
@@ -95,8 +95,10 @@ function Intro() {
 
     // Create button to play audio guide
     buttons.instructions = initButton("Instructions", centerX, logoY + instructionButtonOffset, function() {
+      audioguide.stop();
       audioguide.play();
       console.log("play audio guide");
+
 
     });
   }
@@ -108,7 +110,7 @@ function Intro() {
    */
   this.draw = function() {
     background(255 - (50 * sin(millis() / 1000)));
-    image(logo, centerX, logoY, logo.width / 5, logo.height / 5);
+    image(logo, centerX, logoY, logo.width / 4, logo.height / 4);
     text("Please put on headphones to continue.", centerX, logoY + logoCaptionOffset);
     text("Reduce your heartrate by 10%", leftButtonX, buttonY + textVerticalOffset);
     text("Two minute meditation", rightButtonX, buttonY + textVerticalOffset);

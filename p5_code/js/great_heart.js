@@ -124,7 +124,7 @@ function GreatHeart() {
     }
     // show/hide menu only if user requests this
     if (hideMenu == "Yes") {
-      if (mouseX < 250 && mouseY < 250) {
+      if (mouseX < 300 && mouseY < 300) {
         gui.show();
       } else {
         gui.hide();
