@@ -20,6 +20,7 @@ function Intro() {
 
   // layout variables
   let centerX = width / 2;
+  let centerHeartX = width / 2 + 275;
   let logoY = height / 5;
   let heartY = height / 5;
   let logoCaptionOffset = 125;
@@ -119,13 +120,11 @@ function Intro() {
 
     if (floor(millis() / 1230) % 2 == 0) {
       // display image 1
-      console.log("display heart 1");
-          image(heart, centerX + 275, logoY, heart.width / 2, heart.height / 2);
+      image(heart, centerX + 275, logoY, heart.width / 2, heart.height / 2);
 
     } else {
       // display image 2
-      console.log("display heart 2");
-          image(heart2, centerX + 275, logoY, heart2.width / 2, heart2.height / 2);
+      image(heart2, centerHeartX, logoY, heart2.width / 2, heart2.height / 2);
     }
     text("Please put on headphones to continue.", centerX, logoY + logoCaptionOffset);
     text("Reduce your heartrate by 10%", leftButtonX, buttonY + textVerticalOffset);
