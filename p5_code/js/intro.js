@@ -15,10 +15,13 @@
  */
 function Intro() {
   let logo;
+  let heart;
+  let heart2;
 
   // layout variables
   let centerX = width / 2;
   let logoY = height / 5;
+  let heartY = height / 5;
   let logoCaptionOffset = 125;
   let instructionButtonOffset = 150;
   let buttonY = height / 1.7;
@@ -63,6 +66,8 @@ function Intro() {
    */
   this.setup = function() {
     logo = loadImage("images/great-heart.png");
+    heart = loadImage("images/heart1.png")
+    heart2 = loadImage("images/heart2.png")
   }
 
   /**
@@ -111,6 +116,17 @@ function Intro() {
   this.draw = function() {
     background(255 - (50 * sin(millis() / 1000)));
     image(logo, centerX, logoY, logo.width / 4, logo.height / 4);
+
+    if (floor(millis() / 1230) % 2 == 0) {
+      // display image 1
+      console.log("display heart 1");
+          image(heart, centerX + 275, logoY, heart.width / 2, heart.height / 2);
+
+    } else {
+      // display image 2
+      console.log("display heart 2");
+          image(heart2, centerX + 275, logoY, heart2.width / 2, heart2.height / 2);
+    }
     text("Please put on headphones to continue.", centerX, logoY + logoCaptionOffset);
     text("Reduce your heartrate by 10%", leftButtonX, buttonY + textVerticalOffset);
     text("Two minute meditation", rightButtonX, buttonY + textVerticalOffset);
